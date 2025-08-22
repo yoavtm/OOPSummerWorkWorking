@@ -64,7 +64,6 @@ public class Deck
         Array.Copy(cards, topIndex, pool, 0, remainingCount);
         Array.Copy(returned, 0, pool, remainingCount, returned.Length);
 
-        // shuffle pool
         for (int i = pool.Length - 1; i > 0; i--)
         {
             int j = random.Next(0, i + 1);

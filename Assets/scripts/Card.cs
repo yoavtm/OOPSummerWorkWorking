@@ -45,6 +45,6 @@ public class Card
                 name = value.ToString();
                 break;
         }
-        return $"{name} of {suit.ToString()}"; // return name + " of " + suit.ToString();
+        return $"{name} of {suit.ToString()}"; 
     }
 }

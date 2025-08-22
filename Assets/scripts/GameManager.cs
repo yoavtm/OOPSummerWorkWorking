@@ -1,4 +1,3 @@
-// GameManager.cs  (only relevant diffs added)
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,9 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+
+    //SerializeField means that i can change the value in the unity editor while keeping it private 
     public static GameManager Instance { get; private set; }
 
-    // NEW: hover pause flag
+    
     public bool IsAnimatingHand { get; private set; } = false;
 
     [Header("Config")]
@@ -124,15 +125,12 @@ public class GameManager : MonoBehaviour
                     if (!player1.RemoveFromHand(v.Data)) yield break;
                     p1Views.Remove(v);
 
-                    // >>> BEGIN hover pause
                     IsAnimatingHand = true;
                     yield return StartCoroutine(MoveTo(v.transform, p1SelectedAnchor.position, moveDuration));
                     p1PlayedView = v;
-                    LayoutHand(p1Views, p1Anchor, false); // reflow hand
-                    // small end-of-frame so hover sees final positions
+                    LayoutHand(p1Views, p1Anchor, false); 
                     yield return null;
                     IsAnimatingHand = false;
-                    // <<< END hover pause
                 }
             }
             yield return null;
@@ -149,14 +147,12 @@ public class GameManager : MonoBehaviour
         if (!player2.RemoveFromHand(v.Data)) yield break;
         p2Views.RemoveAt(idx);
 
-        // >>> BEGIN hover pause (covers human row too, for safety)
         IsAnimatingHand = true;
         yield return StartCoroutine(MoveTo(v.transform, p2SelectedAnchor.position, moveDuration));
         p2PlayedView = v;
         LayoutHand(p2Views, p2Anchor, true);
         yield return null;
         IsAnimatingHand = false;
-        // <<< END hover pause
     }
 
     IEnumerator ResolveRound()
